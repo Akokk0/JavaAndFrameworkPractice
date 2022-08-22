@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoJumpCase</title>
+</head>
+<style>
+    p {
+        text-align: center;
+    }
+    span {
+        color: red;
+    }
+</style>
+<body>
+    <p><span id="time">5</span>秒后自动跳转至百度...</p>
+</body>
+<script>
+    var second = 5;
+    var time = document.getElementById("time");
+    function auto() {
+        second--;
+        if (second <= 0) {
+            location.href = "https://baidu.com";
+        } else {
+            time.innerHTML = second;
+        }
+
+    }
+    setInterval(auto,1000);
+</script>
+</html>

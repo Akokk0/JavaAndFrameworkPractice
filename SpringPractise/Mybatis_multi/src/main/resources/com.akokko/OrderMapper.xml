@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="OrderMapper">
+
+    <resultMap id="orderMap" type="order">
+        <id column="" property=""/>
+        <result column="" property=""/>
+
+    </resultMap>
+
+
+    <select id="findOne" resultMap="orderMap">
+        select * u.id uid , o.id oid from user u , order o where u.id = o.id
+    </select>
+</mapper>

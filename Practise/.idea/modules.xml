@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Bootstrap/Bootstrap.iml" filepath="$PROJECT_DIR$/Bootstrap/Bootstrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Function/Function.iml" filepath="$PROJECT_DIR$/Function/Function.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaScript/JavaScript.iml" filepath="$PROJECT_DIR$/JavaScript/JavaScript.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Practise.iml" filepath="$PROJECT_DIR$/Practise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Stream/Stream.iml" filepath="$PROJECT_DIR$/Stream/Stream.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web/Web.iml" filepath="$PROJECT_DIR$/web/Web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WebPractise/WebPractise.iml" filepath="$PROJECT_DIR$/WebPractise/WebPractise.iml" />
+    </modules>
+  </component>
+</project>

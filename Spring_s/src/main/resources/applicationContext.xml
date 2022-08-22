@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation=
+               "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--<context:component-scan base-package="com.akokko"/>
+
+    <context:property-placeholder location="classpath:druid.properties"/>
+
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="initialSize" value="${initialSize}"/>
+        <property name="maxActive" value="${maxActive}"/>
+        <property name="maxWait" value="${maxWait}"/>
+    </bean>-->
+
+    <!-- 事务 -->
+    <!-- 事务管理对象 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+
+    <!-- 事务通知对象 -->
+    <tx:advice id="transactionInterceptor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="transfer" isolation="DEFAULT" propagation="REQUIRED" timeout="-1" read-only="false"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 事务织入 -->
+    <aop:config>
+        <aop:advisor advice-ref="transactionInterceptor" pointcut="execution(* com.akokko.dao.*.*(..))"/>
+    </aop:config>
+
+    <context:property-placeholder location="druid.properties"/>
+
+    <!-- 连接池对象 -->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+
+    <!-- JDBCTemplate -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+
+    <!-- 目标对象 -->
+    <bean id="target" class="com.akokko.aop.Target"></bean>
+
+    <!-- 切面对象 -->
+    <bean id="myAspect" class="com.akokko.aop.MyAspect"></bean>
+
+    <!-- 配置织入 -->
+    <aop:config>
+        <aop:pointcut id="aspect" expression="execution(* com.akokko.aop.*.*(..))"/>
+        <!-- 声明切面 -->
+        <aop:aspect ref="myAspect">
+            <!-- 配置前置增强 -->
+            <aop:before method="before" pointcut-ref="aspect"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+    <aop:aspectj-autoproxy/>
+</beans>

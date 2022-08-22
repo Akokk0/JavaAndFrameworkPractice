@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+
+<body>
+    <img id="checkcode" src="/response_practise/img">
+    <a id="change" href="javascript:void(0);">看不清？换一张</a>
+</body>
+
+<script>
+    window.onload = function () {
+        var checkcode = document.getElementById("checkcode");
+        checkcode.onclick = function () {
+            changecheckcode();
+        }
+
+        var change = document.getElementById("change");
+        change.onclick = function () {
+            changecheckcode();
+        }
+    }
+
+    var changecheckcode = function () {
+        var checkcode = document.getElementById("checkcode");
+        var date = new Date().getTime();
+        checkcode.src = "/response_practise/img?" + date;
+    }
+</script>
+
+</html>

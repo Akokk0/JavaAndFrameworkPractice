@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/getParameter.js"></script>
+<script>
+    $(function () {
+        load(1);
+    });
+
+    function load(currentPage) {
+        $.get("route/myFavorite", {currentPage : currentPage}, function (pb) {
+            var divStrs = '';
+            for (var i = 0; i < pb.list.length; i++) {
+                var divStr = '<div class="col-md-3">\n' +
+                    '                                    <a href="route_detail.html?rid=' + pb.list[i].rid + '">\n' +
+                    '                                        <img src="' + pb.list[i].rimage + '" alt="">\n' +
+                    '                                        <div class="has_border">\n' +
+                    '                                            <h3>' + pb.list[i].rname + '</h3>\n' +
+                    '                                            <div class="price">网付价<em>￥</em><strong>' + pb.list[i].price + '</strong><em>起</em></div>\n' +
+                    '                                        </div>\n' +
+                    '                                    </a>\n' +
+                    '                                </div>';
+                divStrs += divStr;
+            }
+            $("#favorite").html(divStrs);
+
+            var lis = '<li onclick="load(1)"><a href="">首页</a></li>';
+            var previousPage = pb.currentPage - 1;
+            if (previousPage < 1) {
+                previousPage = 1;
+            }
+            lis += '<li className="threeword" onclick="load(' + previousPage + ')"><a href="#">上一页</a></li>';
+            var start = 0;
+            var end = 0;
+            if (pb.totalPage <= 10) {
+                start = 1;
+                end = pb.totalPage;
+            } else {
+                start = pb.currentPage - 5;
+                end = pb.currentPage + 4;
+                if (start < 1) {
+                    start = 1;
+                    end = 10;
+                } else if (end > pb.totalPage) {
+                    end = pb.totalPage;
+                    start = end - 9;
+                }
+            }
+            for (var i = start; i <= end; i++) {
+                var li = '<li onclick="load(' + i + ')"><a href="#">' + i + '</a></li>';
+                lis += li;
+            }
+            var nextPage = pb.currentPage + 1;
+            if (nextPage > pb.totalPage) {
+                nextPage = pb.totalPage;
+            }
+            lis += '<li className="threeword" onclick="load(' + nextPage + ')"><a href="javascript:;">下一页</a></li>';
+            lis += '<li className="threeword" onclick="load(' + pb.totalPage + ')"><a href="javascript:;">末页</a></li>';
+
+            $("#ul").html(lis);
+        });
+    }
+</script>
+    <head>
+        <meta charset="utf-8">
+        <title>黑马旅游网-我的收藏</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" href="css/index.css">
+       <style>
+           .tab-content .row>div {
+            margin-top: 16px;
+           } 
+           .tab-content {
+            margin-bottom: 36px;
+           }
+       </style>
+    </head>
+    <body>
+    <!--引入头部-->
+    <div id="header"></div>
+         <!-- 排行榜 start-->
+        <section id="content">            
+            <section class="hemai_jx">
+                <div class="jx_top">
+                    <div class="jx_tit">
+                        <img src="images/icon_5.jpg" alt="">
+                        <span>我的收藏</span>
+                    </div>                    
+                </div>
+                <div class="jx_content">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="row" id="favorite">
+
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+                <div class="pageNum">
+                    <ul id="ul">
+
+                    </ul>
+                </div>
+            </section>                      
+        </section>
+        <!-- 排行榜 end-->
+    	
+         <!--引入尾部-->
+    	<div id="footer"></div>
+        <!--导入布局js，共享header和footer-->
+        <script type="text/javascript" src="js/include.js"></script>
+    </body>
+</html>
